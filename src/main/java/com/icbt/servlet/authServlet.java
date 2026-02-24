@@ -1,16 +1,18 @@
 package com.icbt.servlet;
-import com.icbt.dao.UserDaoJdbc;
-import com.icbt.service.AuthService;
+import com.icbt.dao.userDaoJdbc;
+import com.icbt.dto.loginDto;
+import com.icbt.service.authService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 
 public class authServlet extends HttpServlet {
-    private AuthService authService;
+    private authService authService;
+
 
     @Override
     public void init() {
-        authService = new AuthService(new UserDaoJdbc());
+        authService = new authService(new userDaoJdbc());
     }
 
     @Override
@@ -20,14 +22,18 @@ public class authServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        if (authService.login(username, password)) {
-            HttpSession session = req.getSession(true);
+        loginDto dto = new loginDto(username, password);
+
+        if (authService.login(dto)) {
+
+            HttpSession session = req.getSession();
             session.setAttribute("user", username);
+
             resp.sendRedirect(req.getContextPath() + "/pages/dashboard.jsp");
             return;
         }
 
-        req.setAttribute("error", "Invalid username or password");
+        req.setAttribute("error", "Invalid login");
         req.getRequestDispatcher("/pages/login.jsp").forward(req, resp);
     }
 }
