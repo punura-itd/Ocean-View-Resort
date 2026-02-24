@@ -13,29 +13,12 @@
 
     <servlet>
         <servlet-name>AuthServlet</servlet-name>
-        <servlet-class>com.icbt.servlet.AuthServlet</servlet-class>
+        <servlet-class>com.icbt.servlet.authServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthServlet</servlet-name>
         <url-pattern>/auth</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>ReservationServlet</servlet-name>
-        <servlet-class>com.icbt.servlet.ReservationServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ReservationServlet</servlet-name>
-        <url-pattern>/reservation</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>BillingServlet</servlet-name>
-        <servlet-class>com.icbt.servlet.BillingServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>BillingServlet</servlet-name>
-        <url-pattern>/billing</url-pattern>
-    </servlet-mapping>
 
 </web-app>
