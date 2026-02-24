@@ -1,5 +1,7 @@
 package com.icbt.dao;
 
-public class userDao {
+public interface userDao {
+
     boolean validateUser(String username, String password);
+
 }
