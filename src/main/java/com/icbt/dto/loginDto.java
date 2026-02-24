@@ -1,12 +1,12 @@
 package com.icbt.dto;
 
-public class loginDTO {
+public class loginDto {
     private String username;
     private String password;
 
-    public loginDTO() {}
+    public loginDto() {}
 
-    public loginDTO(String username, String password) {
+    public loginDto(String username, String password) {
         this.username = username;
         this.password = password;
     }
