@@ -12,9 +12,12 @@ public class ValidatorUtil {
 
     public static boolean isValidPhone(String phone) {
         if (phone == null) return false;
-        // Sri Lanka mobile often 10 digits; allow +94 optional
-        String p = phone.trim();
-        return p.matches("^(94|0)?7{8}$");
+
+        // remove spaces, hyphens, brackets
+        String p = phone.trim().replaceAll("[\\s\\-()]", "");
+
+        // Accept: 07XXXXXXXX, +94 7XXXXXXXX, +947XXXXXXXX, 947XXXXXXXX
+        return p.matches("^(\\+94|94|0)?7\\d{8}$");
     }
 
     public static boolean isValidDateRange(LocalDate checkIn, LocalDate checkOut) {

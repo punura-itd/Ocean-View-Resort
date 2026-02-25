@@ -2,7 +2,7 @@ package com.icbt.model;
 
 import java.time.LocalDate;
 
-public class Reservation {
+public class reservation {
     private String reservationNo;
     private String guestName;
     private String address;
@@ -11,9 +11,9 @@ public class Reservation {
     private LocalDate checkIn;
     private LocalDate checkOut;
 
-    public Reservation() {}
+    public reservation() {}
 
-    public Reservation(String reservationNo, String guestName, String address, String contact,
+    public reservation(String reservationNo, String guestName, String address, String contact,
                        String roomType, LocalDate checkIn, LocalDate checkOut) {
         this.reservationNo = reservationNo;
         this.guestName = guestName;
