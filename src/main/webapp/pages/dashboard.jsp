@@ -14,6 +14,7 @@
 
 <ul>
     <li><a href="<%=request.getContextPath()%>/pages/addReservation.jsp">Add Reservation</a></li>
+    <li><a href="<%=request.getContextPath()%>/reservation?action=list">Reservation List</a></li>
     <li><a href="<%=request.getContextPath()%>/pages/viewReservation.jsp">View Reservation</a></li>
     <li><a href="<%=request.getContextPath()%>/pages/bill.jsp">Calculate Bill</a></li>
     <li><a href="<%=request.getContextPath()%>/pages/help.jsp">Help</a></li>

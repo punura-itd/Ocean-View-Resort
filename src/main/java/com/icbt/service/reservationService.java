@@ -4,7 +4,7 @@ import com.icbt.dao.reservationDao;
 import com.icbt.dto.reservationDto;
 import com.icbt.model.reservation;
 import com.icbt.util.ValidatorUtil;
-
+import java.util.List;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -143,5 +143,16 @@ public class reservationService {
 
     private String safe(String s) {
         return s == null ? "" : s.trim();
+    }
+
+    public List<reservation> getAllReservations() {
+        return reservationDao.findAll();
+    }
+
+    public List<reservation> searchReservations(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return reservationDao.findAll();
+        }
+        return reservationDao.search(keyword.trim());
     }
 }

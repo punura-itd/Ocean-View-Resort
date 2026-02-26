@@ -2,7 +2,8 @@ package com.icbt.dao;
 
 import com.icbt.model.reservation;
 import com.icbt.util.DBConnection;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -170,5 +171,72 @@ public class reservationDaoJdbc implements reservationDao {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+    @Override
+    public List<reservation> findAll() {
+        String sql = "SELECT reservation_no, guest_name, address, contact, room_type, check_in, check_out " +
+                "FROM reservations ORDER BY check_in DESC";
+
+        List<reservation> list = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                reservation r = new reservation();
+                r.setReservationNo(rs.getString("reservation_no"));
+                r.setGuestName(rs.getString("guest_name"));
+                r.setAddress(rs.getString("address"));
+                r.setContact(rs.getString("contact"));
+                r.setRoomType(rs.getString("room_type"));
+                r.setCheckIn(rs.getDate("check_in").toLocalDate());
+                r.setCheckOut(rs.getDate("check_out").toLocalDate());
+                list.add(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<reservation> search(String keyword) {
+        String sql = "SELECT reservation_no, guest_name, address, contact, room_type, check_in, check_out " +
+                "FROM reservations " +
+                "WHERE reservation_no LIKE ? OR guest_name LIKE ? OR contact LIKE ? " +
+                "ORDER BY check_in DESC";
+
+        List<reservation> list = new ArrayList<>();
+        String k = "%" + (keyword == null ? "" : keyword.trim()) + "%";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, k);
+            ps.setString(2, k);
+            ps.setString(3, k);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    reservation r = new reservation();
+                    r.setReservationNo(rs.getString("reservation_no"));
+                    r.setGuestName(rs.getString("guest_name"));
+                    r.setAddress(rs.getString("address"));
+                    r.setContact(rs.getString("contact"));
+                    r.setRoomType(rs.getString("room_type"));
+                    r.setCheckIn(rs.getDate("check_in").toLocalDate());
+                    r.setCheckOut(rs.getDate("check_out").toLocalDate());
+                    list.add(r);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 }
