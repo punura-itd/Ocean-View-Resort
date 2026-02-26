@@ -4,7 +4,7 @@ import com.icbt.dao.reservationDaoJdbc;
 import com.icbt.dto.reservationDto;
 import com.icbt.model.reservation;
 import com.icbt.service.reservationService;
-
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
@@ -18,6 +18,23 @@ public class reservationServlet extends HttpServlet {
     @Override
     public void init() {
         reservationService = new reservationService(new reservationDaoJdbc());
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        String action = req.getParameter("action");
+
+        if ("list".equalsIgnoreCase(action)) {
+            String keyword = req.getParameter("keyword");
+            req.setAttribute("reservations", reservationService.searchReservations(keyword));
+            req.setAttribute("keyword", keyword);
+            req.getRequestDispatcher("/pages/reservationList.jsp").forward(req, resp);
+            return;
+        }
+
+        resp.sendRedirect(req.getContextPath() + "/pages/dashboard.jsp");
     }
 
     @Override
@@ -45,6 +62,13 @@ public class reservationServlet extends HttpServlet {
             }
 
             req.getRequestDispatcher("/pages/addReservation.jsp").forward(req, resp);
+            return;
+        }
+        if ("list".equalsIgnoreCase(action)) {
+            String keyword = req.getParameter("keyword");
+            req.setAttribute("reservations", reservationService.searchReservations(keyword));
+            req.setAttribute("keyword", keyword);
+            req.getRequestDispatcher("/pages/reservationList.jsp").forward(req, resp);
             return;
         }
 
