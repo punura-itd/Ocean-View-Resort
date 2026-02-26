@@ -12,6 +12,38 @@ import java.util.Optional;
 public class reservationDaoJdbc implements reservationDao {
 
     @Override
+    public Optional<reservation> findByPhone(String phone) {
+
+        String sql = "SELECT reservation_no, guest_name, address, contact, room_type, check_in, check_out " +
+                "FROM reservations WHERE contact=? ORDER BY check_in DESC LIMIT 1";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, phone);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return Optional.empty();
+
+                reservation r = new reservation();
+                r.setReservationNo(rs.getString("reservation_no"));
+                r.setGuestName(rs.getString("guest_name"));
+                r.setAddress(rs.getString("address"));
+                r.setContact(rs.getString("contact"));
+                r.setRoomType(rs.getString("room_type"));
+                r.setCheckIn(rs.getDate("check_in").toLocalDate());
+                r.setCheckOut(rs.getDate("check_out").toLocalDate());
+
+                return Optional.of(r);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public String findLastReservationNo() {
 
         String sql = "SELECT reservation_no FROM reservations ORDER BY reservation_no DESC LIMIT 1";
