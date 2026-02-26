@@ -1,5 +1,6 @@
 package com.icbt.service;
 
+import com.icbt.dao.billDao;
 import com.icbt.dao.reservationDao;
 import com.icbt.dao.roomRateDao;
 import com.icbt.dto.billDto;
@@ -12,10 +13,12 @@ public class billingService {
 
     private final reservationDao reservationDao;
     private final roomRateDao roomRateDao;
+    private final billDao billDao;
 
-    public billingService(reservationDao reservationDao, roomRateDao roomRateDao) {
+    public billingService(reservationDao reservationDao, roomRateDao roomRateDao, billDao billDao) {
         this.reservationDao = reservationDao;
         this.roomRateDao = roomRateDao;
+        this.billDao = billDao;
     }
 
     public Optional<billDto> generateBill(String reservationNo) {
@@ -47,6 +50,7 @@ public class billingService {
         dto.setRatePerNight(rate);
         dto.setTotal(total);
 
+        billDao.save(dto);
         return Optional.of(dto);
     }
 }

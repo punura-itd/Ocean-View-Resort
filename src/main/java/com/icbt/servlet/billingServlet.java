@@ -1,5 +1,6 @@
 package com.icbt.servlet;
 
+import com.icbt.dao.billDaoJdbc;
 import com.icbt.dao.reservationDaoJdbc;
 import com.icbt.dao.roomRateDaoJdbc;
 import com.icbt.dto.billDto;
@@ -17,9 +18,12 @@ public class billingServlet extends HttpServlet {
 
     @Override
     public void init() {
-        billingService = new billingService(new reservationDaoJdbc(), new roomRateDaoJdbc());
+        billingService = new billingService(
+                new reservationDaoJdbc(),
+                new roomRateDaoJdbc(),
+                new billDaoJdbc()
+        );
     }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
