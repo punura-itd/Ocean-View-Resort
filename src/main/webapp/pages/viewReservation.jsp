@@ -36,6 +36,19 @@
 <p><b>Room Type:</b> <%= r.getRoomType() %></p>
 <p><b>Check-in:</b> <%= r.getCheckIn() %></p>
 <p><b>Check-out:</b> <%= r.getCheckOut() %></p>
+<form action="<%=request.getContextPath()%>/reservation" method="post" style="display:inline;">
+    <input type="hidden" name="action" value="edit"/>
+    <input type="hidden" name="reservationNo" value="<%= r.getReservationNo() %>"/>
+    <button type="submit">Edit</button>
+</form>
+
+<!-- Cancel/Delete -->
+<form action="<%=request.getContextPath()%>/reservation" method="post" style="display:inline;"
+      onsubmit="return confirm('Are you sure you want to cancel this reservation?');">
+    <input type="hidden" name="action" value="delete"/>
+    <input type="hidden" name="reservationNo" value="<%= r.getReservationNo() %>"/>
+    <button type="submit">Cancel Reservation</button>
+</form>
 <% } %>
 
 <br/>
