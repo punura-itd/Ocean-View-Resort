@@ -14,9 +14,15 @@
 <p style="color:red;"><%= request.getAttribute("error") != null ? request.getAttribute("error") : "" %></p>
 
 <form action="<%=request.getContextPath()%>/billing" method="post">
+
     Reservation No:
-    <input type="text" name="reservationNo" required/>
+    <input type="text" name="reservationNo"/>
+
+    OR Phone:
+    <input type="text" name="phone"/>
+
     <button type="submit">Generate Bill</button>
+
 </form>
 
 <hr/>

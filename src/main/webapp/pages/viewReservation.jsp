@@ -15,8 +15,13 @@
 
 <form action="<%=request.getContextPath()%>/reservation" method="post">
     <input type="hidden" name="action" value="view"/>
+
     Reservation No:
-    <input type="text" name="reservationNo" required/>
+    <input type="text" name="reservationNo"/>
+
+    OR Phone:
+    <input type="text" name="phone"/>
+
     <button type="submit">Search</button>
 </form>
 

@@ -79,6 +79,11 @@ public class reservationService {
         return resNo;
     }
 
+    public Optional<reservation> getReservationByPhone(String phone) {
+        if (phone == null || phone.trim().isEmpty()) return Optional.empty();
+        return reservationDao.findByPhone(phone.trim());
+    }
+
     public Optional<reservation> getReservation(String reservationNo) {
         String resNo = safe(reservationNo);
         if (!ValidatorUtil.isNonBlank(resNo)) return Optional.empty();

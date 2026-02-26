@@ -4,8 +4,10 @@ import com.icbt.dao.billDaoJdbc;
 import com.icbt.dao.reservationDaoJdbc;
 import com.icbt.dao.roomRateDaoJdbc;
 import com.icbt.dto.billDto;
+import com.icbt.model.reservation;
 import com.icbt.service.billingService;
 
+import com.icbt.service.reservationService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 
@@ -18,26 +20,46 @@ public class billingServlet extends HttpServlet {
 
     @Override
     public void init() {
+        reservationService = new reservationService(new reservationDaoJdbc());
+
         billingService = new billingService(
                 new reservationDaoJdbc(),
                 new roomRateDaoJdbc(),
                 new billDaoJdbc()
         );
     }
+
+    private reservationService reservationService;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.getRequestDispatcher("/pages/bill.jsp").forward(req, resp);
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
         String reservationNo = req.getParameter("reservationNo");
+        String phone = req.getParameter("phone");
 
-        Optional<billDto> bill = billingService.generateBill(reservationNo);
+        Optional<reservation> r;
 
-        if (bill.isEmpty()) {
-            req.setAttribute("error", "Bill cannot be generated. Check reservation number, dates, or room rates.");
+        if (reservationNo != null && !reservationNo.isBlank()) {
+            r = reservationService.getReservation(reservationNo);
         } else {
-            req.setAttribute("bill", bill.get());
+            r = reservationService.getReservationByPhone(phone);
         }
 
+        if (r.isEmpty()) {
+            req.setAttribute("error", "Reservation not found.");
+        } else {
+            Optional<billDto> bill = billingService.generateBill(r.get().getReservationNo());
+            bill.ifPresent(b -> req.setAttribute("bill", b));
+        }
+
+        // ⭐ YOU MISSED THIS
         req.getRequestDispatcher("/pages/bill.jsp").forward(req, resp);
     }
 }

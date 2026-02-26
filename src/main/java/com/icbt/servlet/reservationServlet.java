@@ -51,9 +51,18 @@ public class reservationServlet extends HttpServlet {
         }
 
         if ("view".equalsIgnoreCase(action)) {
-            String reservationNo = req.getParameter("reservationNo");
 
-            Optional<reservation> r = reservationService.getReservation(reservationNo);
+            String reservationNo = req.getParameter("reservationNo");
+            String phone = req.getParameter("phone");
+
+            Optional<reservation> r;
+
+            if (reservationNo != null && !reservationNo.trim().isEmpty()) {
+                r = reservationService.getReservation(reservationNo);
+            } else {
+                r = reservationService.getReservationByPhone(phone);
+            }
+
             if (r.isEmpty()) {
                 req.setAttribute("error", "Reservation not found.");
             } else {
