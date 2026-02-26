@@ -81,6 +81,44 @@ public class reservationDaoJdbc implements reservationDao {
     }
 
     @Override
+    public void update(reservation r) {
+        String sql = "UPDATE reservations SET guest_name=?, address=?, contact=?, room_type=?, check_in=?, check_out=? " +
+                "WHERE reservation_no=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, r.getGuestName());
+            ps.setString(2, r.getAddress());
+            ps.setString(3, r.getContact());
+            ps.setString(4, r.getRoomType());
+            ps.setDate(5, Date.valueOf(r.getCheckIn()));
+            ps.setDate(6, Date.valueOf(r.getCheckOut()));
+            ps.setString(7, r.getReservationNo());
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update reservation: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public void deleteByReservationNo(String reservationNo) {
+        String sql = "DELETE FROM reservations WHERE reservation_no=?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, reservationNo);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete reservation: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void save(reservation r) {
         String sql = "INSERT INTO reservations(reservation_no, guest_name, address, contact, room_type, check_in, check_out) " +
                 "VALUES(?,?,?,?,?,?,?)";
