@@ -23,6 +23,15 @@
         <servlet-name>ReservationServlet</servlet-name>
         <servlet-class>com.icbt.servlet.reservationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>billingServlet</servlet-name>
+        <servlet-class>com.icbt.servlet.billingServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>billingServlet</servlet-name>
+        <url-pattern>/billing</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>ReservationServlet</servlet-name>
