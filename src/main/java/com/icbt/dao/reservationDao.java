@@ -10,6 +10,8 @@ public interface reservationDao {
     boolean existsByReservationNo(String reservationNo);
 
     void save(reservation reservation);
+    void update(reservation r);
+    void deleteByReservationNo(String reservationNo);
     Optional<reservation> findByPhone(String phone);
     Optional<reservation> findByReservationNo(String reservationNo);
 }

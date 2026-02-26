@@ -26,8 +26,8 @@ public class reservationServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
+        // ADD (already working)
         if ("add".equalsIgnoreCase(action)) {
-
             reservationDto dto = new reservationDto();
             dto.setGuestName(req.getParameter("guestName"));
             dto.setAddress(req.getParameter("address"));
@@ -36,7 +36,6 @@ public class reservationServlet extends HttpServlet {
             dto.setCheckIn(req.getParameter("checkIn"));
             dto.setCheckOut(req.getParameter("checkOut"));
 
-            // ✅ Service should return reservation number like RES-0001 on success
             String result = reservationService.addReservation(dto);
 
             if (result != null && result.startsWith("RES-")) {
@@ -45,13 +44,12 @@ public class reservationServlet extends HttpServlet {
                 req.setAttribute("error", result);
             }
 
-            // ✅ Your real file name (from your screenshot)
             req.getRequestDispatcher("/pages/addReservation.jsp").forward(req, resp);
             return;
         }
 
+        // VIEW (by reservation no OR phone)
         if ("view".equalsIgnoreCase(action)) {
-
             String reservationNo = req.getParameter("reservationNo");
             String phone = req.getParameter("phone");
 
@@ -67,6 +65,64 @@ public class reservationServlet extends HttpServlet {
                 req.setAttribute("error", "Reservation not found.");
             } else {
                 req.setAttribute("reservation", r.get());
+            }
+
+            req.getRequestDispatcher("/pages/viewReservation.jsp").forward(req, resp);
+            return;
+        }
+
+        // EDIT (load edit page with data)
+        if ("edit".equalsIgnoreCase(action)) {
+            String reservationNo = req.getParameter("reservationNo");
+
+            Optional<reservation> r = reservationService.getReservation(reservationNo);
+            if (r.isEmpty()) {
+                req.setAttribute("error", "Reservation not found.");
+                req.getRequestDispatcher("/pages/viewReservation.jsp").forward(req, resp);
+            } else {
+                req.setAttribute("reservation", r.get());
+                req.getRequestDispatcher("/pages/editReservation.jsp").forward(req, resp);
+            }
+            return;
+        }
+
+        // UPDATE (save edits)
+        if ("update".equalsIgnoreCase(action)) {
+            reservationDto dto = new reservationDto();
+            dto.setReservationNo(req.getParameter("reservationNo"));
+            dto.setGuestName(req.getParameter("guestName"));
+            dto.setAddress(req.getParameter("address"));
+            dto.setContact(req.getParameter("contact"));
+            dto.setRoomType(req.getParameter("roomType"));
+            dto.setCheckIn(req.getParameter("checkIn"));
+            dto.setCheckOut(req.getParameter("checkOut"));
+
+            String result = reservationService.updateReservation(dto);
+
+            if ("OK".equals(result)) {
+                req.setAttribute("success", "Reservation updated successfully!");
+            } else {
+                req.setAttribute("error", result);
+            }
+
+            // reload updated record on edit page
+            Optional<reservation> r = reservationService.getReservation(dto.getReservationNo());
+            r.ifPresent(value -> req.setAttribute("reservation", value));
+
+            req.getRequestDispatcher("/pages/editReservation.jsp").forward(req, resp);
+            return;
+        }
+
+        // DELETE / CANCEL
+        if ("delete".equalsIgnoreCase(action)) {
+            String reservationNo = req.getParameter("reservationNo");
+
+            String result = reservationService.cancelReservation(reservationNo);
+
+            if ("OK".equals(result)) {
+                req.setAttribute("success", "Reservation cancelled successfully!");
+            } else {
+                req.setAttribute("error", result);
             }
 
             req.getRequestDispatcher("/pages/viewReservation.jsp").forward(req, resp);

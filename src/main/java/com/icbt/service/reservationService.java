@@ -79,6 +79,57 @@ public class reservationService {
         return resNo;
     }
 
+    public String updateReservation(reservationDto dto) {
+        if (dto == null) return "Invalid request.";
+
+        String resNo = safe(dto.getReservationNo());
+        String name  = safe(dto.getGuestName());
+        String addr  = safe(dto.getAddress());
+        String phone = safe(dto.getContact());
+        String room  = safe(dto.getRoomType()).toUpperCase();
+        String inStr = safe(dto.getCheckIn());
+        String outStr= safe(dto.getCheckOut());
+
+        if (!ValidatorUtil.isNonBlank(resNo)) return "Reservation number is required.";
+        if (!ValidatorUtil.isNonBlank(name)) return "Guest name is required.";
+        if (!ValidatorUtil.isValidPhone(phone)) return "Invalid contact number (e.g., 0771234567).";
+        if (!ValidatorUtil.isNonBlank(room)) return "Room type is required.";
+
+        LocalDate checkIn;
+        LocalDate checkOut;
+        try {
+            checkIn = LocalDate.parse(inStr);
+            checkOut = LocalDate.parse(outStr);
+        } catch (Exception e) {
+            return "Invalid date format. Use YYYY-MM-DD.";
+        }
+
+        if (!ValidatorUtil.isValidDateRange(checkIn, checkOut)) {
+            return "Check-out date must be after check-in date.";
+        }
+
+        // must exist to update
+        if (reservationDao.findByReservationNo(resNo).isEmpty()) {
+            return "Reservation not found.";
+        }
+
+        reservation r = new reservation(resNo, name, addr, phone, room, checkIn, checkOut);
+        reservationDao.update(r);
+        return "OK";
+    }
+
+    public String cancelReservation(String reservationNo) {
+        String resNo = safe(reservationNo);
+        if (!ValidatorUtil.isNonBlank(resNo)) return "Reservation number is required.";
+
+        if (reservationDao.findByReservationNo(resNo).isEmpty()) {
+            return "Reservation not found.";
+        }
+
+        reservationDao.deleteByReservationNo(resNo);
+        return "OK";
+    }
+
     public Optional<reservation> getReservationByPhone(String phone) {
         if (phone == null || phone.trim().isEmpty()) return Optional.empty();
         return reservationDao.findByPhone(phone.trim());
