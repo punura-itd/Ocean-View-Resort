@@ -29,7 +29,7 @@ public class authServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("user", username);
 
-            resp.sendRedirect(req.getContextPath() + "/pages/dashboard.jsp");
+            resp.sendRedirect(req.getContextPath() + "resp.sendRedirect(req.getContextPath() + \"/dashboard\");");
             return;
         }
 
