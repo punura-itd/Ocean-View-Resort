@@ -51,7 +51,7 @@
 
 <br/>
 <a href="<%=request.getContextPath()%>/pages/viewReservation.jsp">Back to View Reservation</a> |
-<a href="<%=request.getContextPath()%>/pages/dashboard.jsp">Dashboard</a>
+<a href="<%=request.getContextPath()%><%=request.getContextPath()%>/dashboard">Dashboard</a>
 
 </body>
 </html>

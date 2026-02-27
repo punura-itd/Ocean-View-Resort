@@ -44,7 +44,7 @@
 <% } %>
 
 <br/><br/>
-<a href="<%=request.getContextPath()%>/pages/dashboard.jsp">Back to Dashboard</a>
+<a href="<%=request.getContextPath()%><%=request.getContextPath()%>/dashboard">Back to Dashboard</a>
 
 </body>
 </html>

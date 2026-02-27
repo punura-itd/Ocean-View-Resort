@@ -27,6 +27,15 @@
         <servlet-name>billingServlet</servlet-name>
         <servlet-class>com.icbt.servlet.billingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>dashboardServlet</servlet-name>
+        <servlet-class>com.icbt.servlet.dashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dashboardServlet</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>billingServlet</servlet-name>
