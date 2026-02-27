@@ -25,6 +25,6 @@ public class dashboardServlet extends HttpServlet {
         dashboardStatsDto stats = dashboardService.getDashboardStats();
         req.setAttribute("stats", stats);
 
-        req.getRequestDispatcher("resp.sendRedirect(req.getContextPath() + \"/dashboard\");").forward(req, resp);
+        req.getRequestDispatcher("/pages/dashboard.jsp").forward(req, resp);
     }
 }

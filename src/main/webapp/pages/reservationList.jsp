@@ -11,37 +11,56 @@
 <html>
 <head>
     <title>Reservation List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 <body>
+<main class="container page-shell">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center mb-3">
+        <h2 class="brand-title mb-0">Reservation List</h2>
+        <a href="<%=request.getContextPath()%>/dashboard" class="btn btn-outline-secondary">Dashboard</a>
+    </div>
 
-<h2>Reservation List</h2>
+    <div class="glass-card p-3 mb-3">
+        <form action="<%=request.getContextPath()%>/reservation" method="get" class="row g-2 align-items-end">
+            <input type="hidden" name="action" value="list"/>
+            <div class="col-12 col-md-8 col-lg-9">
+                <label class="form-label">Search (Res No / Name / Phone)</label>
+                <input type="text" class="form-control" name="keyword" value="<%= keyword %>"/>
+            </div>
+            <div class="col-6 col-md-2 col-lg-1">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+            <div class="col-6 col-md-2 col-lg-2">
+                <a href="<%=request.getContextPath()%>/reservation?action=list" class="btn btn-outline-secondary w-100">Reset</a>
+            </div>
+        </form>
+    </div>
 
-<form action="<%=request.getContextPath()%>/reservation" method="get">
-    <input type="hidden" name="action" value="list"/>
-    Search (Res No / Name / Phone):
-    <input type="text" name="keyword" value="<%= keyword %>"/>
-    <button type="submit">Search</button>
-    <a href="<%=request.getContextPath()%>/reservation?action=list">Reset</a>
-</form>
-
-<br/>
-
-<table border="1" cellpadding="8" cellspacing="0">
-    <tr>
-        <th>Reservation No</th>
-        <th>Guest Name</th>
-        <th>Contact</th>
-        <th>Room Type</th>
-        <th>Check-in</th>
-        <th>Check-out</th>
-        <th>Actions</th>
-    </tr>
+    <div class="glass-card overflow-auto">
+        <table class="table table-modern table-hover">
+            <thead>
+            <tr>
+                <th>Reservation No</th>
+                <th>Guest Name</th>
+                <th>Contact</th>
+                <th>Room Type</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
 
     <%
         if (list == null || list.isEmpty()) {
     %>
     <tr>
-        <td colspan="7">No reservations found.</td>
+        <td colspan="7" class="text-center py-4">No reservations found.</td>
     </tr>
     <%
     } else {
@@ -55,26 +74,23 @@
         <td><%= r.getCheckIn() %></td>
         <td><%= r.getCheckOut() %></td>
         <td>
-            <!-- View -->
-            <form action="<%=request.getContextPath()%>/reservation" method="post" style="display:inline;">
+            <form action="<%=request.getContextPath()%>/reservation" method="post" class="inline-form">
                 <input type="hidden" name="action" value="view"/>
                 <input type="hidden" name="reservationNo" value="<%= r.getReservationNo() %>"/>
-                <button type="submit">View</button>
+                <button type="submit" class="btn btn-sm btn-outline-primary">View</button>
             </form>
 
-            <!-- Edit -->
-            <form action="<%=request.getContextPath()%>/reservation" method="post" style="display:inline;">
+            <form action="<%=request.getContextPath()%>/reservation" method="post" class="inline-form">
                 <input type="hidden" name="action" value="edit"/>
                 <input type="hidden" name="reservationNo" value="<%= r.getReservationNo() %>"/>
-                <button type="submit">Edit</button>
+                <button type="submit" class="btn btn-sm btn-outline-warning">Edit</button>
             </form>
 
-            <!-- Cancel -->
-            <form action="<%=request.getContextPath()%>/reservation" method="post" style="display:inline;"
+            <form action="<%=request.getContextPath()%>/reservation" method="post" class="inline-form"
                   onsubmit="return confirm('Cancel this reservation?');">
                 <input type="hidden" name="action" value="delete"/>
                 <input type="hidden" name="reservationNo" value="<%= r.getReservationNo() %>"/>
-                <button type="submit">Cancel</button>
+                <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
             </form>
         </td>
     </tr>
@@ -82,10 +98,11 @@
             }
         }
     %>
-</table>
+            </tbody>
+        </table>
+    </div>
+</main>
 
-<br/>
-<a href="<%=request.getContextPath()%><%=request.getContextPath()%>/dashboard">Back to Dashboard</a>
-
+<script src="../assets/js/app.js"></script>
 </body>
 </html>

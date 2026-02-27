@@ -1,0 +1,130 @@
+:root {
+    --bg: #f4f9ff;
+    --surface: #ffffff;
+    --text: #1f2d3d;
+    --muted: #6b7a8c;
+    --primary: #0f4c81;
+    --primary-soft: #dfeefd;
+    --success-soft: #e7f7ec;
+    --danger-soft: #fde7ea;
+    --border: #d9e5f3;
+    --shadow: 0 12px 28px rgba(15, 76, 129, 0.1);
+}
+
+body {
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 0% 0%, #dceeff 0, transparent 32%),
+        radial-gradient(circle at 100% 100%, #e0f7f3 0, transparent 40%),
+        var(--bg);
+    min-height: 100vh;
+}
+
+.page-shell {
+    padding: 1.5rem 0 2.5rem;
+}
+
+.glass-card {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: color-mix(in srgb, var(--surface) 88%, #eef6ff);
+    box-shadow: var(--shadow);
+}
+
+.brand-title {
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.top-nav {
+    border-radius: 1rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.kpi-card {
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--surface);
+    height: 100%;
+}
+
+.kpi-label {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.kpi-value {
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.table-modern {
+    --bs-table-bg: transparent;
+    margin-bottom: 0;
+}
+
+.table-modern thead th {
+    background: var(--primary-soft);
+    border-bottom: 0;
+}
+
+.table-modern td,
+.table-modern th {
+    vertical-align: middle;
+}
+
+.inline-form {
+    display: inline-block;
+}
+
+.inline-form + .inline-form {
+    margin-left: 0.25rem;
+}
+
+.hero-badge {
+    font-weight: 500;
+    color: var(--primary);
+    background: var(--primary-soft);
+    border: 1px solid #cfe3fb;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+}
+
+.result-block p {
+    margin-bottom: 0.45rem;
+}
+
+.alert-soft-success {
+    background: var(--success-soft);
+    border: 1px solid #bfe7cd;
+    color: #1f6a37;
+}
+
+.alert-soft-danger {
+    background: var(--danger-soft);
+    border: 1px solid #f3bec7;
+    color: #812032;
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #0d416e;
+    border-color: #0d416e;
+}
+
+@media (max-width: 767.98px) {
+    .page-shell {
+        padding-top: 1rem;
+    }
+
+    .kpi-value {
+        font-size: 1.2rem;
+    }
+}
