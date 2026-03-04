@@ -56,7 +56,12 @@ public class billingServlet extends HttpServlet {
             req.setAttribute("error", "Reservation not found.");
         } else {
             Optional<billDto> bill = billingService.generateBill(r.get().getReservationNo());
-            bill.ifPresent(b -> req.setAttribute("bill", b));
+            if (bill.isPresent()) {
+                req.setAttribute("bill", bill.get());
+                req.setAttribute("success", "Bill generated successfully.");
+            } else {
+                req.setAttribute("error", "Unable to generate bill for this reservation.");
+            }
         }
 
         // ⭐ YOU MISSED THIS
