@@ -17,12 +17,15 @@
                 <span class="hero-badge">Resort Management Portal</span>
                 <h2 class="brand-title mt-3 mb-1">Ocean View Resort</h2>
                 <p class="text-secondary mb-4">Sign in to manage reservations, billing, and dashboard insights.</p>
-
+                <%
+                    String error = (String) request.getAttribute("error");
+                    String oldUsername = request.getParameter("username");
+                    if (oldUsername == null) oldUsername = "";
+                %>
                 <form action="<%=request.getContextPath()%>/auth" method="post">
                     <div class="mb-3">
                         <label class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" required />
-                    </div>
+                        <input type="text" class="form-control" name="username" value="<%= oldUsername %>" required />                    </div>
 
                     <div class="mb-4">
                         <label class="form-label">Password</label>
@@ -34,7 +37,7 @@
 
                 <% if (request.getAttribute("error") != null) { %>
                 <div class="alert alert-soft-danger mt-3 mb-0" data-auto-hide="true">
-                    <%= request.getAttribute("error") %>
+                    <%= error %>
                 </div>
                 <% } %>
             </div>
