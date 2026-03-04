@@ -35,8 +35,8 @@
                     <input type="text" class="form-control" name="guestName" required/>
                 </div>
                 <div class="col-12 col-md-6">
-                    <label class="form-label">Contact (0771234567)</label>
-                    <input type="text" class="form-control" name="contact" required/>
+                    <label class="form-label">Contact</label>
+                    <input type="text" class="form-control" pattern="^0\d{9}$" title="Enter valid 10-digit phone number" name="contact" required/>
                 </div>
                 <div class="col-12">
                     <label class="form-label">Address</label>

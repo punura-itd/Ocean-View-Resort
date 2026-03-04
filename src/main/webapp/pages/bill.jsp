@@ -20,6 +20,9 @@
         <a href="<%=request.getContextPath()%>/dashboard" class="btn btn-outline-secondary">Dashboard</a>
     </div>
 
+    <% if (request.getAttribute("success") != null) { %>
+    <div class="alert alert-soft-success" data-auto-hide="true"><%= request.getAttribute("success") %></div>
+    <% } %>
     <% if (request.getAttribute("error") != null) { %>
     <div class="alert alert-soft-danger" data-auto-hide="true"><%= request.getAttribute("error") %></div>
     <% } %>
@@ -60,3 +63,4 @@
 <script src="../assets/js/app.js"></script>
 </body>
 </html>
+

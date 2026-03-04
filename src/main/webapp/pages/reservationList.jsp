@@ -90,7 +90,11 @@
                   onsubmit="return confirm('Cancel this reservation?');">
                 <input type="hidden" name="action" value="delete"/>
                 <input type="hidden" name="reservationNo" value="<%= r.getReservationNo() %>"/>
-                <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                <button type="submit"
+                        class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Are you sure you want to cancel this reservation?');">
+                    Cancel
+                </button>
             </form>
         </td>
     </tr>
