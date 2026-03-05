@@ -233,3 +233,12 @@ body {
         width: auto;
     }
 }
+
+@media print {
+    button,
+    .btn,
+    .form-label,
+    form {
+        display: none;
+    }
+}
