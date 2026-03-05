@@ -28,8 +28,10 @@
     <% } %>
 
     <div class="glass-card p-3 mb-3">
-        <form action="<%=request.getContextPath()%>/billing" method="post" class="row g-2 align-items-end">
-            <div class="col-12 col-md-5">
+        <form action="<%=request.getContextPath()%>/billing"
+              method="post"
+              class="row g-2 align-items-end"
+              onsubmit="this.querySelector('button[type=submit]').disabled=true;">            <div class="col-12 col-md-5">
                 <label class="form-label">Reservation No</label>
                 <input type="text" class="form-control" name="reservationNo"/>
             </div>
@@ -55,7 +57,11 @@
         <p><strong>Rate per Night:</strong> LKR <%= String.format("%.2f", b.getRatePerNight()) %></p>
         <hr/>
         <h3 class="mb-3">Total: LKR <%= String.format("%.2f", b.getTotal()) %></h3>
-        <button type="button" class="btn btn-primary" onclick="window.print()">Print Bill</button>
+        <button type="button"
+                class="btn btn-primary"
+                onclick="this.disabled=true; window.print();">
+            Print Bill
+        </button>
     </div>
 <% } %>
 </main>
