@@ -7,8 +7,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/style.css" />
+    <script src="<%=request.getContextPath()%>/assets/js/app.js"></script>
+
+
 </head>
+
 <body>
 <main class="container page-shell">
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -24,7 +28,7 @@
     <% } %>
 
     <div class="glass-card p-4">
-        <form action="<%=request.getContextPath()%>/reservation" method="post">
+        <form id="addReservationForm" action="<%=request.getContextPath()%>/reservation" method="post">
             <input type="hidden" name="action" value="add"/>
 
             <p class="text-secondary">Reservation No (Auto Generated): <strong>Will be assigned after saving</strong></p>

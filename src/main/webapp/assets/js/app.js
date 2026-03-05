@@ -59,3 +59,38 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+// Reservation date validation
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("#addReservationForm");
+    if (!form) return;
+
+    const checkIn = form.querySelector("input[name='checkIn']");
+    const checkOut = form.querySelector("input[name='checkOut']");
+    if (!checkIn || !checkOut) return;
+
+    // Optional UX: block selecting checkout before checkin
+    checkIn.addEventListener("change", function () {
+        checkOut.min = checkIn.value || "";
+        if (checkOut.value && checkOut.value <= checkIn.value) {
+            checkOut.value = "";
+        }
+    });
+
+    form.addEventListener("submit", function (e) {
+        const inVal = checkIn.value;
+        const outVal = checkOut.value;
+
+        if (!inVal || !outVal) return;
+
+        // Safer than string compare: convert to Date
+        const inDate = new Date(inVal + "T00:00:00");
+        const outDate = new Date(outVal + "T00:00:00");
+
+        if (outDate <= inDate) {
+            e.preventDefault();
+            alert("Check-out date must be after check-in date.");
+            checkOut.focus();
+        }
+    });
+});
+
