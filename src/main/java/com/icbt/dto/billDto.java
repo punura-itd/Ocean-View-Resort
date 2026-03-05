@@ -9,6 +9,10 @@ public class billDto {
     private long nights;
     private double ratePerNight;
     private double total;
+    private String invoiceNo;
+    private double tax;
+    private double serviceCharge;
+    private double grandTotal;
 
     public String getReservationNo() { return reservationNo; }
     public void setReservationNo(String reservationNo) { this.reservationNo = reservationNo; }
@@ -33,4 +37,36 @@ public class billDto {
 
     public double getTotal() { return total; }
     public void setTotal(double total) { this.total = total; }
+
+    public String getInvoiceNo() {
+        return invoiceNo;
+    }
+
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo;
+    }
+
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
+    public double getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(double serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public double getGrandTotal() {
+        return grandTotal;
+    }
+
+    public void setGrandTotal(double grandTotal) {
+        this.grandTotal = grandTotal;
+    }
 }
