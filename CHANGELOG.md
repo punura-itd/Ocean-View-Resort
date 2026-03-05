@@ -8,3 +8,8 @@
 
 ### Fixed
 - N/A
+
+## [1.1.0] - 2026-03-04
+### Added
+- UI/UX improvements (alerts, validation, double-submit prevention)
+- Documentation updates (README)

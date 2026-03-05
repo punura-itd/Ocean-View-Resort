@@ -7,7 +7,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/style.css" />
+    <script src="<%=request.getContextPath()%>/assets/js/app.js"></script>
 </head>
 <body>
 <main class="container page-shell">
@@ -17,12 +18,15 @@
                 <span class="hero-badge">Resort Management Portal</span>
                 <h2 class="brand-title mt-3 mb-1">Ocean View Resort</h2>
                 <p class="text-secondary mb-4">Sign in to manage reservations, billing, and dashboard insights.</p>
-
+                <%
+                    String error = (String) request.getAttribute("error");
+                    String oldUsername = request.getParameter("username");
+                    if (oldUsername == null) oldUsername = "";
+                %>
                 <form action="<%=request.getContextPath()%>/auth" method="post">
                     <div class="mb-3">
                         <label class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" required />
-                    </div>
+                        <input type="text" class="form-control" name="username" value="<%= oldUsername %>" required />                    </div>
 
                     <div class="mb-4">
                         <label class="form-label">Password</label>
@@ -34,7 +38,7 @@
 
                 <% if (request.getAttribute("error") != null) { %>
                 <div class="alert alert-soft-danger mt-3 mb-0" data-auto-hide="true">
-                    <%= request.getAttribute("error") %>
+                    <%= error %>
                 </div>
                 <% } %>
             </div>
