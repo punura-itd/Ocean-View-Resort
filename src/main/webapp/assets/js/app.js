@@ -1,4 +1,3 @@
-console.log("app.js loaded ✅");
 
 document.addEventListener("DOMContentLoaded", function () {
     var sourceAlerts = document.querySelectorAll("[data-auto-hide='true']");
