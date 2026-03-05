@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     var sourceAlerts = document.querySelectorAll("[data-auto-hide='true']");
     if (!sourceAlerts.length) return;

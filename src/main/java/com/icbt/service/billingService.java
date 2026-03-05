@@ -22,6 +22,7 @@ public class billingService {
     }
 
     public Optional<billDto> generateBill(String reservationNo) {
+
         if (reservationNo == null || reservationNo.trim().isEmpty()) return Optional.empty();
 
         Optional<reservation> optRes = reservationDao.findByReservationNo(reservationNo.trim());
@@ -38,19 +39,43 @@ public class billingService {
         if (nights <= 0) return Optional.empty();
 
         double rate = rateOpt.get();
-        double total = nights * rate;
+
+        double subtotal = nights * rate;
+
+        double tax = subtotal * 0.10;          // 10% tax
+        double serviceCharge = subtotal * 0.05; // 5% service charge
+
+        double grandTotal = subtotal + tax + serviceCharge;
 
         billDto dto = new billDto();
+
+        dto.setInvoiceNo(generateInvoiceNo());
+
         dto.setReservationNo(r.getReservationNo());
         dto.setGuestName(r.getGuestName());
         dto.setRoomType(roomType);
         dto.setCheckIn(String.valueOf(r.getCheckIn()));
         dto.setCheckOut(String.valueOf(r.getCheckOut()));
+
         dto.setNights(nights);
         dto.setRatePerNight(rate);
-        dto.setTotal(total);
+
+        dto.setTotal(subtotal);
+        dto.setTax(tax);
+        dto.setServiceCharge(serviceCharge);
+        dto.setGrandTotal(grandTotal);
 
         billDao.save(dto);
+
         return Optional.of(dto);
+    }
+
+    private String generateInvoiceNo() {
+
+        String date = java.time.LocalDate.now().toString().replace("-", "");
+
+        int random = (int) (Math.random() * 1000);
+
+        return "INV-" + date + "-" + random;
     }
 }
