@@ -46,25 +46,75 @@
         </form>
     </div>
 
-<% if (b != null) { %>
-    <div class="glass-card p-4 result-block">
-        <h4 class="mb-3">Bill Details</h4>
-        <p><strong>Reservation No:</strong> <%= b.getReservationNo() %></p>
-        <p><strong>Guest Name:</strong> <%= b.getGuestName() %></p>
-        <p><strong>Room Type:</strong> <%= b.getRoomType() %></p>
-        <p><strong>Check-in:</strong> <%= b.getCheckIn() %></p>
-        <p><strong>Check-out:</strong> <%= b.getCheckOut() %></p>
-        <p><strong>Nights:</strong> <%= b.getNights() %></p>
-        <p><strong>Rate per Night:</strong> LKR <%= String.format("%.2f", b.getRatePerNight()) %></p>
-        <hr/>
-        <h3 class="mb-3">Total: LKR <%= String.format("%.2f", b.getTotal()) %></h3>
-        <button type="button"
-                class="btn btn-primary"
-                onclick="this.disabled=true; window.print();">
-            Print Bill
-        </button>
+    <% if (b != null) { %>
+
+    <div class="glass-card p-4 result-block invoice">
+
+        <!-- Resort Header -->
+        <div class="text-center mb-4">
+            <h2 class="mb-1">Ocean View Resort</h2>
+            <p class="mb-0">Galle, Sri Lanka</p>
+            <p class="mb-0">Phone: +94 91 1234567</p>
+            <hr>
+        </div>
+
+        <!-- Invoice Details -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <strong>Guest Name:</strong> <%= b.getGuestName() %><br>
+                <strong>Reservation No:</strong> <%= b.getReservationNo() %><br>
+                <strong>Room Type:</strong> <%= b.getRoomType() %>
+            </div>
+
+            <div class="col-md-6 text-md-end">
+                <strong>Invoice Date:</strong> <%= java.time.LocalDate.now() %><br>
+                <strong>Check-in:</strong> <%= b.getCheckIn() %><br>
+                <strong>Check-out:</strong> <%= b.getCheckOut() %>
+            </div>
+        </div>
+
+        <!-- Billing Table -->
+        <table class="table table-bordered">
+            <thead class="table-light">
+            <tr>
+                <th>Description</th>
+                <th class="text-center">Nights</th>
+                <th class="text-end">Rate (LKR)</th>
+                <th class="text-end">Amount (LKR)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><%= b.getRoomType() %> Room Stay</td>
+                <td class="text-center"><%= b.getNights() %></td>
+                <td class="text-end"><%= String.format("%.2f", b.getRatePerNight()) %></td>
+                <td class="text-end"><%= String.format("%.2f", b.getTotal()) %></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Total -->
+        <div class="text-end mt-3">
+            <h4>Total: LKR <%= String.format("%.2f", b.getTotal()) %></h4>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-4">
+            <p class="text-muted">Thank you for staying with Ocean View Resort</p>
+        </div>
+
+        <!-- Print Button -->
+        <div class="text-center mt-3 no-print">
+            <button type="button"
+                    class="btn btn-primary"
+                    onclick="this.disabled=true; window.print();">
+                Print Bill
+            </button>
+        </div>
+
     </div>
-<% } %>
+
+    <% } %>
 </main>
 
 <script src="../assets/js/app.js"></script>
