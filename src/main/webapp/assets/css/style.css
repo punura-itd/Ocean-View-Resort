@@ -235,10 +235,61 @@ body {
 }
 
 @media print {
-    button,
+
+    /* Clean page */
+    body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Hide non-invoice UI */
+    .no-print,
+    .popup-alert-stack,
+    .alert,
     .btn,
-    .form-label,
-    form {
-        display: none;
+    button,
+    form,
+    .top-nav {
+        display: none !important;
+    }
+
+    /* Remove layout paddings/shadows */
+    .page-shell {
+        padding: 0 !important;
+    }
+
+    .glass-card {
+        box-shadow: none !important;
+        border: none !important;
+        background: #fff !important;
+    }
+
+    /* Center invoice nicely */
+    .invoice {
+        max-width: 800px;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+
+    /* Invoice table should look like a real invoice */
+    .invoice table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    .invoice table th,
+    .invoice table td {
+        border: 1px solid #000 !important;
+        padding: 8px 10px !important;
+    }
+
+    .invoice hr {
+        border-top: 1px solid #000 !important;
+        opacity: 1 !important;
+    }
+
+    .invoice {
+        page-break-inside: avoid;
     }
 }
