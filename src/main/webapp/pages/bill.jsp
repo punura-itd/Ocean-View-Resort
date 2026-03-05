@@ -23,8 +23,7 @@
 
 <main class="container page-shell">
 
-    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center mb-3">
-        <h2 class="brand-title mb-0">Calculate & Print Bill</h2>
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 align-items-md-center mb-3 no-print">        <h2 class="brand-title mb-0">Calculate & Print Bill</h2>
         <a href="<%=request.getContextPath()%>/dashboard" class="btn btn-outline-secondary">Dashboard</a>
     </div>
 
@@ -42,7 +41,7 @@
 
     <!-- Search Form -->
 
-    <div class="glass-card p-3 mb-3">
+    <div class="glass-card p-3 mb-3 no-print">
 
         <form action="<%=request.getContextPath()%>/billing"
               method="post"
